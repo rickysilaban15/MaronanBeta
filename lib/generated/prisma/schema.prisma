@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model contacts {
+  id         Int      @id @default(autoincrement())
+  name       String   @db.VarChar(255)
+  email      String   @unique(map: "email") @db.VarChar(255)
+  phone      String?  @db.VarChar(20)
+  message    String?  @db.Text
+  created_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model keranjang {
+  id         Int      @id @default(autoincrement())
+  user_id    Int?
+  produk_id  Int
+  jumlah     Int?     @default(1)
+  created_at DateTime @default(now()) @db.Timestamp(0)
+  produk     produk   @relation(fields: [produk_id], references: [id], onUpdate: Restrict, map: "keranjang_ibfk_1")
+
+  @@index([produk_id], map: "produk_id")
+}
+
+model newsletter_subscribers {
+  id            Int      @id @default(autoincrement())
+  email         String   @unique(map: "email") @db.VarChar(255)
+  subscribed_at DateTime @default(now()) @db.Timestamp(0)
+}
+
+model produk {
+  id        Int         @id @default(autoincrement())
+  nama      String      @db.VarChar(255)
+  deskripsi String?     @db.Text
+  harga     Decimal     @db.Decimal(10, 2)
+  gambar    String?     @db.VarChar(255)
+  stok      Int?        @default(0)
+  keranjang keranjang[]
+}
+
+model users {
+  id       Int     @id @default(autoincrement())
+  nama     String? @db.VarChar(100)
+  email    String? @unique(map: "email") @db.VarChar(100)
+  password String? @db.VarChar(255)
+}
