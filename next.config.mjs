@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export', // ✅ penting agar bisa diekspor ke /out
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -9,6 +10,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
