@@ -5,7 +5,7 @@ import { ProductReviews } from "@/components/product-reviews"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Suspense } from "react"
 import { ProductDetailSkeleton } from "@/components/product-detail-skeleton"
-import { getAllProdukIds } from "@/lib/produk" // kamu buat ini nanti
+import { getAllProdukIds } from "@/lib/produk"
 
 export async function generateStaticParams() {
   const produkList = await getAllProdukIds()
