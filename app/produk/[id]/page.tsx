@@ -1,9 +1,18 @@
+// app/produk/[id]/page.tsx
 import { ProductDetail } from "@/components/product-detail"
 import { RelatedProducts } from "@/components/related-products"
 import { ProductReviews } from "@/components/product-reviews"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Suspense } from "react"
 import { ProductDetailSkeleton } from "@/components/product-detail-skeleton"
+import { getAllProdukIds } from "@/lib/produk" // kamu buat ini nanti
+
+export async function generateStaticParams() {
+  const produkList = await getAllProdukIds()
+  return produkList.map((produk) => ({
+    id: produk.id.toString(),
+  }))
+}
 
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
   return (
