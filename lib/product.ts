@@ -1,7 +1,17 @@
+// lib/produk.ts
+
+import { prisma } from "@/lib/prisma"
+
+export async function getProdukById(id: string) {
+  return await prisma.produk.findUnique({
+    where: { id },
+  })
+}
+
 export async function getAllProdukIds() {
-  return [
-    { id: "1" },
-    { id: "2" },
-    { id: "3" },
-  ]
+  const produk = await prisma.produk.findMany({
+    select: { id: true },
+  })
+
+  return produk
 }
